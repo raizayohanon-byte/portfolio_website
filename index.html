@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Raiza Yohanon — Portfolio</title>
+<meta name="description" content="[One sentence describing who you are and what you make.]">
+
+<!--
+  ============================================================
+  STUDENT PORTFOLIO TEMPLATE — DARK / SAAS EDITION
+  ============================================================
+  How to use this file:
+  1. Find every [BRACKETED PLACEHOLDER] and replace it with your
+     own text, links, and images.
+  2. Search for "DUPLICATE THIS BLOCK" to see where you can copy
+     a whole block (a capability card, a project card, a timeline
+     row, a skill bar) to add more entries.
+  3. This is one plain HTML file with CSS and a little JS inside
+     it — no build tools needed. Open it in a browser to preview,
+     and upload it as-is to GitHub Pages, Netlify, or any host.
+  4. The palette and type choices live in the ":root" CSS variables
+     near the top of the <style> block — change those and the
+     whole site restyles itself.
+  5. The skill bars near the top ("System status" card) read their
+     fill width from the "--fill" inline style on each .meter-fill
+     element — set it to whatever percentage you want.
+  ============================================================
+-->
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+  /* ============ DESIGN TOKENS — edit these to restyle the whole site ============ */
+  :root {
+    --bg: #0a0f0b;            /* page background */
+    --bg-alt: #0e1510;        /* section alt background */
+    --card: #121a14;          /* card background */
+    --card-hover: #16201a;    /* card hover state */
+    --border: #223026;        /* hairline borders */
+    --ink: #edf1e9;           /* primary text */
+    --ink-soft: #a3b3a1;      /* secondary text */
+    --ink-dim: #647065;       /* tertiary / muted text */
+    --accent: #b6ff3c;        /* primary accent — buttons, highlights */
+    --accent-dim: #8fd130;    /* accent, darker (hover/borders) */
+    --accent-soft: rgba(182, 255, 60, 0.1);  /* accent tint background */
+    --amber: #ffb648;         /* single warm highlight — used sparingly */
+
+    --font-display: "Space Grotesk", sans-serif;
+    --font-body: "Inter", -apple-system, sans-serif;
+    --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+
+    --radius: 14px;
+    --nav-h: 76px;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    * { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
+  }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--font-body);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  ::-webkit-scrollbar {
+  width: 0px;
+  background: transparent;
+}
+
+html {
+  scrollbar-width: none; /* Firefox */
+}
+
+  a { color: var(--accent); }
+  h1, h2, h3 { font-family: var(--font-display); font-weight: 600; line-height: 1.12; margin: 0; color: var(--ink); }
+  p { margin: 0; }
+
+  .skip-link {
+    position: absolute; left: -999px; top: 0;
+    background: var(--ink); color: var(--bg);
+    padding: 0.75rem 1.25rem; z-index: 200;
+    font-family: var(--font-mono); font-size: 0.85rem; border-radius: 0 0 6px 0;
+  }
+  .skip-link:focus { left: 0; top: 0; }
+
+  a:focus-visible, button:focus-visible, .nav-link:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+  }
+  .eyebrow::before {
+    content: "";
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 10px var(--accent);
+    flex-shrink: 0;
+  }
+
+  .wrap { max-width: 1180px; margin: 0 auto; padding: 0 2rem; }
+  @media (max-width: 640px) { .wrap { padding: 0 1.25rem; } }
+
+  .btn {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    font-family: var(--font-mono); font-size: 0.82rem;
+    padding: 0.85rem 1.4rem; border-radius: 999px;
+    text-decoration: none; border: 1px solid transparent;
+    cursor: pointer; transition: transform 0.15s ease, background 0.15s ease, border-color 0.15s ease;
+  }
+  .btn:hover { transform: translateY(-2px); }
+  .btn-primary { background: var(--accent); color: #0a1006; font-weight: 500; }
+  .btn-primary:hover { background: var(--accent-dim); }
+  .btn-ghost { background: transparent; color: var(--ink); border-color: var(--border); }
+  .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* ============ NAV ============ */
+  header.nav {
+    position: sticky; top: 0; z-index: 100;
+    height: var(--nav-h);
+    display: flex; align-items: center;
+    background: rgba(10, 15, 11, 0.82);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-inner { display: flex; align-items: center; justify-content: space-between; width: 100%; }
+  .brand { display: flex; align-items: center; gap: 0.6rem; text-decoration: none; }
+  .brand-mark {
+    width: 34px; height: 34px; border-radius: 9px;
+    background: var(--accent-soft); border: 1px solid var(--border);
+    color: var(--accent); font-family: var(--font-display); font-weight: 700; font-size: 0.95rem;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .brand-name { font-family: var(--font-display); font-weight: 600; color: var(--ink); font-size: 1.02rem; }
+
+  .nav-links { display: flex; gap: 2.1rem; list-style: none; margin: 0; padding: 0; }
+  .nav-link { font-family: var(--font-mono); font-size: 0.8rem; color: var(--ink-soft); text-decoration: none; transition: color 0.15s ease; }
+  .nav-link:hover { color: var(--accent); }
+
+  .nav-actions { display: flex; align-items: center; gap: 1rem; }
+  .nav-toggle { display: none; background: none; border: 1px solid var(--border); border-radius: 8px; width: 40px; height: 40px; color: var(--ink); align-items: center; justify-content: center; }
+
+  @media (max-width: 860px) {
+    .nav-links { position: fixed; top: var(--nav-h); left: 0; right: 0; background: var(--bg-alt); border-bottom: 1px solid var(--border);
+      flex-direction: column; gap: 0; padding: 0.5rem 0; display: none; }
+    .nav-links.open { display: flex; }
+    .nav-link { padding: 0.9rem 2rem; width: 100%; border-bottom: 1px solid var(--border); }
+    .nav-toggle { display: flex; }
+    .nav-actions .btn-primary { display: none; }
+  }
+
+  /* ============ HERO ============ */
+  section.hero {
+    padding: 5rem 0 6rem;
+    position: relative;
+    
+    overflow: hidden;
+    background-image: linear-gradient(180deg, rgba(10,15,11,0.55) 0%, rgba(10, 15, 11, 0) 100%), url("images/raiza.png");
+   background-size: cover;
+  background-position: right center;
+  }
+  .hero-grid {
+    display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 3.5rem; align-items: center;
+  }
+
+section.hero {
+  background-position: 20% center;
+}
+section.hero {
+  min-height: 100vh;
+}
+
+.hero .wrap {
+  max-width: 100%;
+  padding: 0 8rem;
+  margin-top: 4rem;
+}
+
+section#about {
+  position: relative;
+  background-image: linear-gradient(180deg, rgba(10,15,11,0.92) 0%, rgba(10, 15, 11, 0.363) 100%), url("images/hero-bg.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+
+section#experience {
+  position: relative;
+  background-image: linear-gradient(180deg, rgba(10,15,11,0.92) 0%, rgba(10, 15, 11, 0.438) 100%), url("images/experience_bg.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+  
+  @media (max-width: 900px) { .hero-grid { grid-template-columns: 1fr; } }
+
+  .hero h1 { font-size: clamp(2.4rem, 5vw, 3.6rem); letter-spacing: -0.01em; }
+  .hero h1 .accent-line { color: var(--accent); }
+  .hero .tagline { margin-top: 1.4rem; color: var(--ink-soft); font-size: 1.08rem; max-width: 46ch; }
+  .hero-actions { display: flex; flex-wrap: wrap; gap: 0.9rem; margin-top: 2.2rem; }
+
+  .hero-stats { display: flex; gap: 2.4rem; margin-top: 3rem; flex-wrap: wrap; }
+  .stat .num { font-family: var(--font-display); font-size: 1.6rem; font-weight: 600; color: var(--ink); }
+  .stat .label { font-family: var(--font-mono); font-size: 0.72rem; color: var(--ink-dim); text-transform: uppercase; letter-spacing: 0.06em; margin-top: 0.2rem; }
+
+  
+  /* ============ TICKER ============ */
+  .ticker-wrap { border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); background: var(--bg-alt); overflow: hidden; padding: 1.1rem 0; }
+  .ticker { display: flex; gap: 3rem; white-space: nowrap; animation: scroll 28s linear infinite; width: max-content; }
+  .ticker span { font-family: var(--font-mono); font-size: 0.85rem; color: var(--ink-dim); display: inline-flex; align-items: center; gap: 0.7rem; }
+  .ticker span::after { content: "//"; color: var(--border); }
+  @keyframes scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+  /* ============ SECTION SHELL ============ */
+  section { padding: 6.5rem 0; border-bottom: 1px solid var(--border); }
+  @media (max-width: 640px) { section { padding: 4rem 0; } }
+  .section-head { max-width: 640px; margin-bottom: 3rem; }
+  .section-head h2 { font-size: clamp(1.7rem, 3.2vw, 2.3rem); }
+  .section-head .sub { color: var(--ink-soft); margin-top: 0.9rem; font-size: 1rem; }
+
+  /* ============ ABOUT / CAPABILITIES ============ */
+  .about-layout { display: grid; grid-template-columns: 0.95fr 1.05fr; gap: 3.5rem; align-items: start; }
+  @media (max-width: 900px) { .about-layout { grid-template-columns: 1fr; } }
+  .about-copy p { color: var(--ink-soft); max-width: 52ch; }
+  .about-copy p + p { margin-top: 1.1rem; }
+  .about-checklist { margin-top: 1.8rem; display: flex; flex-direction: column; gap: 0.7rem; }
+  .about-checklist li { list-style: none; display: flex; gap: 0.7rem; align-items: flex-start; font-size: 0.95rem; color: var(--ink); }
+  .about-checklist svg { flex-shrink: 0; margin-top: 0.2rem; color: var(--accent); }
+
+  .cap-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.1rem; }
+  @media (max-width: 560px) { .cap-grid { grid-template-columns: 1fr; } }
+  .cap-card {
+    background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
+    padding: 1.5rem; transition: border-color 0.2s ease, background 0.2s ease, transform 0.2s ease;
+  }
+  .cap-card:hover { border-color: var(--accent-dim); background: var(--card-hover); transform: translateY(-3px); }
+  .cap-icon {
+    width: 38px; height: 38px; border-radius: 9px; background: var(--accent-soft); color: var(--accent);
+    display: flex; align-items: center; justify-content: center; margin-bottom: 1rem;
+  }
+  .cap-card h3 { font-size: 1.02rem; margin-bottom: 0.5rem; }
+  .cap-card p { color: var(--ink-soft); font-size: 0.88rem; }
+  .cap-arrow { margin-top: 1rem; display: inline-flex; align-items: center; gap: 0.4rem; font-family: var(--font-mono); font-size: 0.75rem; color: var(--ink-dim); }
+
+  /* ============ SKILLS ============ */
+  .skills-panel { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+  @media (max-width: 780px) { .skills-panel { grid-template-columns: 1fr; } }
+  .skill-group { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.6rem; }
+  .skill-group h3 { font-family: var(--font-mono); font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.07em; color: var(--accent); margin-bottom: 1.2rem; }
+  .skill-group .meters { margin-top: 0; gap: 1.05rem; }
+
+  /* ============ PROJECTS ============ */
+  .project-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
+  @media (max-width: 780px) { .project-grid { grid-template-columns: 1fr; } }
+  .project-card {
+    background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
+    overflow: hidden; display: flex; flex-direction: column; transition: border-color 0.2s ease, transform 0.2s ease;
+  }
+  .project-card:hover { border-color: var(--accent-dim); transform: translateY(-4px); }
+  .project-media { aspect-ratio: 16 / 10; background: var(--bg-alt); overflow: hidden; border-bottom: 1px solid var(--border); }
+  .project-media img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .project-body { padding: 1.5rem; }
+  .project-card h3 { font-size: 1.15rem; margin-bottom: 0.5rem; }
+  .project-card .desc { color: var(--ink-soft); font-size: 0.92rem; }
+  .tags { display: flex; gap: 0.5rem; flex-wrap: wrap; margin: 1rem 0; }
+  .tag { font-family: var(--font-mono); font-size: 0.68rem; background: var(--accent-soft); color: var(--accent); padding: 0.25rem 0.6rem; border-radius: 999px; border: 1px solid rgba(182,255,60,0.18); }
+  .project-links { font-family: var(--font-mono); font-size: 0.8rem; display: flex; gap: 1.3rem; padding-top: 0.9rem; border-top: 1px dashed var(--border); }
+  .project-links a { text-decoration: none; color: var(--ink); }
+  .project-links a:hover { color: var(--accent); }
+
+  /* ============ EXPERIENCE / EDUCATION ============ */
+  .timeline-columns { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; }
+  @media (max-width: 780px) { .timeline-columns { grid-template-columns: 1fr; gap: 2.5rem; } }
+  .col-title { font-family: var(--font-mono); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.07em; color: var(--accent); margin-bottom: 1.4rem; }
+  .timeline { border-left: 1px solid var(--border); padding-left: 1.8rem; display: flex; flex-direction: column; gap: 2.1rem; }
+  .timeline-item { position: relative; }
+  .timeline-item::before {
+    content: ""; position: absolute; left: -2.35rem; top: 0.35rem;
+    width: 9px; height: 9px; border-radius: 50%; background: var(--accent);
+    box-shadow: 0 0 0 4px var(--accent-soft);
+  }
+  .timeline-item .when { font-family: var(--font-mono); font-size: 0.75rem; color: var(--ink-dim); }
+  .timeline-item h3 { font-size: 1.05rem; margin-top: 0.3rem; }
+  .timeline-item .where { color: var(--accent); font-size: 0.88rem; margin: 0.25rem 0 0.5rem; }
+  .timeline-item p { color: var(--ink-soft); font-size: 0.9rem; max-width: 55ch; }
+
+  /* ============ CONTACT CTA ============ */
+  .cta-banner {
+    border-radius: 22px; background: linear-gradient(135deg, var(--card) 0%, var(--bg-alt) 100%);
+    border: 1px solid var(--border); padding: 3.2rem; display: flex; align-items: center; justify-content: space-between; gap: 2rem;
+  }
+  @media (max-width: 780px) { .cta-banner { flex-direction: column; text-align: center; padding: 2.2rem 1.5rem; } }
+  .cta-banner h2 { font-size: clamp(1.6rem, 3vw, 2.1rem); max-width: 22ch; }
+  .cta-banner .sub { color: var(--ink-soft); margin-top: 0.8rem; max-width: 40ch; }
+  .cta-actions { display: flex; gap: 0.9rem; flex-wrap: wrap; }
+  .contact { border-bottom: none; }
+
+  footer.sign-off {
+    padding: 2.5rem 0 3rem; font-family: var(--font-mono); font-size: 0.75rem; color: var(--ink-dim);
+    display: flex; justify-content: space-between; flex-wrap: wrap; gap: 1rem;
+  }
+  footer.sign-off a { color: var(--ink-dim); text-decoration: none; }
+  footer.sign-off a:hover { color: var(--accent); }
+  .footer-links { display: flex; gap: 1.5rem; }
+
+  /* ============ REVEAL ON SCROLL ============ */
+  .reveal { opacity: 0; transform: translateY(16px); transition: opacity 0.6s ease, transform 0.6s ease; }
+  .reveal.in { opacity: 1; transform: translateY(0); }
+
+
+  .btn-disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* ============ IMAGE MODAL ============ */
+.img-modal {
+  display: none;
+  position: fixed; inset: 0; z-index: 300;
+  background: rgba(10, 15, 11, 0.92);
+  align-items: center; justify-content: center;
+  padding: 3rem;
+}
+.img-modal.open { display: flex; }
+.img-modal-content {
+  max-width: 90vw; max-height: 85vh;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+}
+.img-modal-close {
+  position: absolute; top: 1.5rem; right: 2rem;
+  background: var(--card); border: 1px solid var(--border);
+  color: var(--ink); font-size: 1.6rem; line-height: 1;
+  width: 44px; height: 44px; border-radius: 50%;
+  cursor: pointer; display: flex; align-items: center; justify-content: center;
+}
+.img-modal-close:hover { border-color: var(--accent); color: var(--accent); }
+.project-media img { cursor: pointer; }
+
+
+
+/* ============ CONTACT FORM ============ */
+.contact-form {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 22px;
+  padding: 2.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.4rem;
+}
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.4rem;
+}
+@media (max-width: 640px) { .form-row { grid-template-columns: 1fr; } }
+.form-field { display: flex; flex-direction: column; gap: 0.5rem; }
+.form-field label {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+}
+.form-field input,
+.form-field textarea {
+  background: var(--bg-alt);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 0.85rem 1rem;
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  resize: vertical;
+  transition: border-color 0.2s ease;
+}
+.form-field input::placeholder,
+.form-field textarea::placeholder { color: var(--ink-dim); }
+.form-field input:focus,
+.form-field textarea:focus {
+  outline: none;
+  border-color: var(--accent-dim);
+}
+.contact-form .btn { align-self: flex-start; }
+
+
+</style>
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<!-- ============ NAV ============ -->
+<header class="nav">
+  <div class="wrap nav-inner">
+    <a class="brand" href="#hero">
+      
+      <span class="brand-name">Raiza Yohanon</span>
+    </a>
+    <nav aria-label="Section navigation">
+      <ul class="nav-links" id="navLinks">
+        <li><a class="nav-link" href="#about">About</a></li>
+        <li><a class="nav-link" href="#skills">Skills</a></li>
+        <li><a class="nav-link" href="#projects">Projects</a></li>
+        <li><a class="nav-link" href="#experience">Experience</a></li>
+        <li><a class="nav-link" href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+    <div class="nav-actions">
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="navLinks">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M2 4.5H16M2 9H16M2 13.5H16" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- ============ HERO ============ -->
+  <section class="hero" id="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <span class="eyebrow">Portfolio — B.S. Information Technology, 2026</span>
+        <h1>Raiza Yohanon.<br><span class="accent-line">Art, music & code.</span></h1>
+        <p class="tagline">IT student who spends the school day writing code and the rest of it drawing, painting, or with a playlist running. I like building things that work well and still feel like they were made by hand.</p>
+        <div class="hero-actions">
+  <a class="btn btn-ghost" href="#contact">Email</a>
+  <a class="btn btn-primary" href="images/Raiza_Yohanon_Resume.pdf" target="_blank" rel="noopener">Resume</a>
+  <span class="btn btn-ghost btn-disabled" aria-disabled="true">GitHub</span>
+  <span class="btn btn-ghost btn-disabled" aria-disabled="true">LinkedIn</span>
+</div>
+
+
+      
+  </section>
+
+
+  <!-- ============ ABOUT + CAPABILITIES ============ -->
+  <section id="about">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="eyebrow">Index 01</span>
+        <h2>About me</h2>
+      </div>
+      <div class="about-layout">
+        <div class="about-copy reveal">
+          <p>I'm Raiza Yohanon, an Information Technology student who's just as comfortable in a code editor as in a sketchbook. Music and art are where I actually recharge  and they quietly shape how I approach everything I build in IT, from layout to color to pacing.</p>
+          <p>Lately I've been leaning into that overlap: using what art and music have taught me about composition and rhythm to make my IT projects feel less like plain software and more like something someone would actually enjoy using.</p>
+          <ul class="about-checklist">dri
+            
+          </ul>
+        </div>
+
+        <div class="cap-grid reveal">
+          <!-- DUPLICATE THIS BLOCK for each capability -->
+          <div class="cap-card">
+            <div class="cap-icon"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><rect x="2" y="2" width="14" height="14" rx="3" stroke="currentColor" stroke-width="1.4"/><path d="M6 9h6M9 6v6" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></div>
+            <h3>Web development</h3>
+            <p>Building responsive sites and small apps with HTML, CSS, and JavaScript, with Java on the backend.</p>
+            <span class="cap-arrow">Learn more →</span>
+          </div>
+          <!-- END DUPLICATE BLOCK -->
+
+          <div class="cap-card">
+            <div class="cap-icon"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M3 14V8M9 14V4M15 14v-6" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></div>
+            <h3>arts & illustration</h3>
+            <p>Digital paintings, character sketches, and illustration work made in Procreate and Photoshop.</p>
+            <span class="cap-arrow">Learn more →</span>
+          </div>
+
+          <div class="cap-card">
+            <div class="cap-icon"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="6.5" stroke="currentColor" stroke-width="1.4"/><path d="M9 5.5V9l2.5 1.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></div>
+            <h3>Editing</h3>
+            <p>Editing photos and short clips — color grading, cutting to a beat, and cleaning up shots for a polished final look</p>
+            <span class="cap-arrow">Learn more →</span>
+          </div>
+
+          <div class="cap-card">
+            <div class="cap-icon"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M9 2l2 4 4.5.6-3.3 3.1.8 4.5L9 12l-4 2.2.8-4.5L2.5 6.6 7 6l2-4z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg></div>
+            <h3>Music & sound</h3>
+            <p>Casual music production and sound editing — a hobby that keeps the creative side of my brain sharp.</p>
+            <span class="cap-arrow">Learn more →</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SKILLS ============ -->
+  <section id="skills">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="eyebrow">Index 02</span>
+        <h2>Skills</h2>
+        <p class="sub">Heres My Basic Skills.</p>
+      </div>
+
+      <div class="skills-panel reveal">
+        <!-- DUPLICATE THIS BLOCK for each skill category -->
+        <div class="skill-group">
+          <h3>Languages</h3>
+          <div class="meters">
+            <div>
+              <div class="meter-label"><span>HTML / CSS</span><span></span></div>
+              <div class="meter-track"><div class="meter-fill" style="--fill:90%"></div></div>
+            </div>
+            <div>
+              <div class="meter-label"><span>JavaScript</span><span></span></div>
+              <div class="meter-track"><div class="meter-fill" style="--fill:75%"></div></div>
+            </div>
+            <div>
+              <div class="meter-label"><span>Java</span><span></span></div>
+              <div class="meter-track"><div class="meter-fill" style="--fill:70%"></div></div>
+            </div>
+          </div>
+        </div>
+        <!-- END DUPLICATE BLOCK -->
+
+        <div class="skill-group">
+          <h3>Tools & platforms</h3>
+          <div class="meters">
+
+            <div>
+              <div class="meter-label"><span>VScode</span><span></span></div>
+              <div class="meter-track"><div class="meter-fill" style="--fill:60%"></div></div>
+            </div>
+            <div>
+              <div class="meter-label"><span>Figma</span><span></span></div>
+              <div class="meter-track"><div class="meter-fill" style="--fill:55%"></div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="skill-group">
+          <h3>Art & music</h3>
+          <div class="meters">
+            <div>
+              <div class="meter-label"><span>Spotify</span><span></span></div>
+              <div class="meter-track"><div class="meter-fill" style="--fill:90%"></div></div>
+            </div>
+            <div>
+              <div class="meter-label"><span>Sketching</span><span></span></div>
+              <div class="meter-track"><div class="meter-fill" style="--fill:75%"></div></div>
+            </div>
+            <div>
+              <div class="meter-label"><span>Canva</span><span></span></div>
+              <div class="meter-track"><div class="meter-fill" style="--fill:85%"></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+<!-- ============ PROJECTS ============ -->
+  <section id="projects">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="eyebrow">Index 03</span>
+        <h2>Artworks & projects</h2>
+        <p class="sub">A few drawings and system that I built as a 2nd year IT student.</p>
+      </div>
+
+      <div class="project-grid reveal">
+        <article class="project-card">
+          <div class="project-media">
+            <img src="images/drawing.png" alt="Digital portrait study with soft lighting" data-modal>
+          </div>
+          <div class="project-body">
+            <h3>Portrait study</h3>
+            <p class="desc">The art illustrates a sinking boat symbolizing corruption in our country Philippines, with officials watching as people struggle in flood waters</p>
+            <div class="tags">
+              <span class="tag">Arts</span>
+              <span class="tag">Portrait</span>
+            </div>
+            <div class="project-links">
+            </div>
+          </div>
+        </article>
+
+        <article class="project-card">
+          <div class="project-media">
+            <img src="images/portfolio.png" alt="Screenshot of the portfolio site homepage" data-modal>
+          </div>
+          <div class="project-body">
+            <h3>Personal portfolio website</h3>
+            <p class="desc">A responsive personal Portfolio Site Built with modern web technologies.</p>
+            <div class="tags">
+              <span class="tag">HTML</span>
+              <span class="tag">CSS</span>
+              <span class="tag">JavaScript</span>
+            </div>
+            <div class="project-links">
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ IMAGE MODAL ============ -->
+<div class="img-modal" id="imgModal" role="dialog" aria-modal="true" aria-hidden="true">
+  <button class="img-modal-close" id="imgModalClose" aria-label="Close">&times;</button>
+  <img class="img-modal-content" id="imgModalContent" src="" alt="">
+</div>
+
+  <!-- ============ EXPERIENCE / EDUCATION ============ -->
+  <section id="experience">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="eyebrow">Index 04</span>
+        <h2>Experience & education</h2>
+      </div>
+
+      <div class="timeline-columns reveal">
+        <!-- LEFT COLUMN: EXPERIENCE -->
+        <div>
+          <div class="col-title">Experience</div>
+          <div class="timeline">
+            <!-- DUPLICATE THIS BLOCK for each job or internship -->
+            <div class="timeline-item">
+              <span class="when">[Month Year] — [Month Year / Present]</span>
+              <h3>Web Developer</h3>
+              <div class="where">[College of Computer Studies]</div>
+              <p>[System Designing and Development.]</p>
+            </div>
+            <!-- END DUPLICATE BLOCK -->
+
+            <div class="timeline-item">
+              <span class="when">[Month Year] — [Month Year]</span>
+              <h3>[Artist]</h3>
+              <div class="where">[Self lang]</div>
+              <p>[Nagddraw la pag Bored.]</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- RIGHT COLUMN: EDUCATION -->
+        <div>
+          <div class="col-title">Education</div>
+          <div class="timeline">
+            <!-- DUPLICATE THIS BLOCK for each degree or program -->
+            <div class="timeline-item">
+              <span class="when">[Year] — Present</span>
+              <h3>B.S. in Information Technology</h3>
+              <div class="where">[Eastern Samar State University]</div>
+              <p>[Coursework in web development.]</p>
+            </div>
+            <!-- END DUPLICATE BLOCK -->
+
+            <div class="timeline-item">
+              <span class="when">[Month Year] — [Month Year]</span>
+              <h3>[No Certificate yet]</h3>
+              <div class="where">[Eastern Samar State University]</div>
+              <p>[encode encode]</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CONTACT ============ -->
+<section class="contact" id="contact">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">Index 05</span>
+      <h2>Let's create something together.</h2>
+      <p class="sub">Open to freelance design work, or just talking about art and music. Send a message below.</p>
+    </div>
+
+    <form class="contact-form reveal" id="contactForm">
+      <div class="form-row">
+        <div class="form-field">
+          <label for="cf-name">Name</label>
+          <input type="text" id="cf-name" name="name" placeholder="Your name" required>
+        </div>
+        <div class="form-field">
+          <label for="cf-email">Email</label>
+          <input type="email" id="cf-email" name="email" placeholder="your@email.com" required>
+        </div>
+      </div>
+
+      <div class="form-field">
+        <label for="cf-subject">Subject</label>
+        <input type="text" id="cf-subject" name="subject" placeholder="What's it about?" required>
+      </div>
+
+      <div class="form-field">
+        <label for="cf-message">Message</label>
+        <textarea id="cf-message" name="message" rows="6" placeholder="Tell me about your project..." required></textarea>
+      </div>
+
+      <button type="submit" class="btn btn-primary">Send message →</button>
+    </form>
+  </div>
+</section>
+
+  <footer class="sign-off">
+    <div class="wrap" style="display:flex; justify-content:space-between; flex-wrap:wrap; gap:1rem; width:100%;">
+      <span>© 2026 Raiza Yohanon. All rights reserved.</span>
+      <div class="footer-links">
+      </div>
+    </div>
+  </footer>
+
+</main>
+
+<script>
+  // Mobile nav toggle
+  const navToggle = document.getElementById('navToggle');
+  const navLinks = document.getElementById('navLinks');
+  navToggle.addEventListener('click', () => {
+    const isOpen = navLinks.classList.toggle('open');
+    navToggle.setAttribute('aria-expanded', isOpen);
+  });
+  navLinks.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      navLinks.classList.remove('open');
+      navToggle.setAttribute('aria-expanded', 'false');
+    });
+  });
+
+  // Fill the meter bars once they're visible, and fade sections in
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('in');
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+  const meterObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const fill = entry.target;
+        fill.style.width = prefersReduced ? fill.style.getPropertyValue('--fill') : fill.style.getPropertyValue('--fill');
+        meterObserver.unobserve(fill);
+      }
+    });
+  }, { threshold: 0.4 });
+  document.querySelectorAll('.meter-fill').forEach(el => meterObserver.observe(el));
+
+
+// Image modal
+const imgModal = document.getElementById('imgModal');
+const imgModalContent = document.getElementById('imgModalContent');
+const imgModalClose = document.getElementById('imgModalClose');
+
+function openImgModal(src, alt) {
+  imgModalContent.src = src;
+  imgModalContent.alt = alt;
+  imgModal.classList.add('open');
+  imgModal.setAttribute('aria-hidden', 'false');
+  document.body.style.overflow = 'hidden';
+}
+function closeImgModal() {
+  imgModal.classList.remove('open');
+  imgModal.setAttribute('aria-hidden', 'true');
+  document.body.style.overflow = '';
+}
+imgModalClose.addEventListener('click', closeImgModal);
+imgModal.addEventListener('click', (e) => { if (e.target === imgModal) closeImgModal(); });
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeImgModal(); });
+
+document.querySelectorAll('.project-media img[data-modal]').forEach(img => {
+  img.addEventListener('click', () => openImgModal(img.src, img.alt));
+});
+document.querySelectorAll('.view-full').forEach(link => {
+  link.addEventListener('click', (e) => {
+    e.preventDefault();
+    openImgModal(link.dataset.src, link.dataset.alt);
+  });
+});
+
+
+// Contact form → mailto
+const contactForm = document.getElementById('contactForm');
+contactForm.addEventListener('submit', (e) => {
+  e.preventDefault();
+  const name = document.getElementById('cf-name').value;
+  const email = document.getElementById('cf-email').value;
+  const subject = document.getElementById('cf-subject').value;
+  const message = document.getElementById('cf-message').value;
+
+  const body = `Name: ${name}\nEmail: ${email}\n\n${message}`;
+  const mailtoLink = `mailto:izayohanon@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+
+  window.location.href = mailtoLink;
+});
+
+</script>
+
+</body>
+</html>
